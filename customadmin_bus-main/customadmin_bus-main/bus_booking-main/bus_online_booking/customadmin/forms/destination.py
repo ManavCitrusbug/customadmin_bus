@@ -22,7 +22,7 @@ class JourneyCreationForm(forms.ModelForm):
             "end_point",
             "transport"
             ]
-        labels={'start_point':'Enter the Bus name','end_point':'Enter the Bus Number','transport':'Enter the Seats'}
+        labels={'start_point':'Enter the Start Point','end_point':'Enter the End Point','transport':'Enter the Buses'}
  
     def clean(self) :
         cleaned_data = super(JourneyCreationForm, self).clean()
@@ -48,14 +48,12 @@ class JourneyCreationForm(forms.ModelForm):
         cleaned_data = super(JourneyCreationForm, self).clean()
         journey = super(JourneyCreationForm, self).save(commit=False)
         journey.start_point =  cleaned_data["start_point"]
-        journey.end_point = cleaned_data["end_point"]
-        journey.transport = cleaned_data["transport"]
-
-        
-      
-      
+        journey.end_point = cleaned_data["end_point"]  
         if commit:
             journey.save()
+        for transport in cleaned_data["transport"] :
+    
+            journey.transport.add()
         return journey
 
 
