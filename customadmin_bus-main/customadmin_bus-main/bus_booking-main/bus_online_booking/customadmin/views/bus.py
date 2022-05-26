@@ -54,6 +54,7 @@ class AddbusDetailView(MyDetailView):
 
     def get(self, request, pk):
         self.context['addbus_detail'] = Transport.objects.filter(pk=pk).first()
+        self.context['addbus_detail_1'] =Booked_bus.objects.filter(busname=self.context['addbus_detail'])
         return render(request, self.template_name, self.context)
 class AddbusUpdateView(MyUpdateView):
     model = Transport

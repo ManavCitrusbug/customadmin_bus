@@ -30,7 +30,7 @@ class JourneyCreationForm(forms.ModelForm):
         start = cleaned_data.get("start_point")
         end = cleaned_data.get("end_point")
         transport = cleaned_data.get("transport")
-       
+        print(transport,"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
         if start =='':
             raise forms.ValidationError("Enter The start")
             
@@ -49,11 +49,13 @@ class JourneyCreationForm(forms.ModelForm):
         journey = super(JourneyCreationForm, self).save(commit=False)
         journey.start_point =  cleaned_data["start_point"]
         journey.end_point = cleaned_data["end_point"]  
+         
         if commit:
             journey.save()
         for transport in cleaned_data["transport"] :
-    
-            journey.transport.add()
+
+            journey.transport.add(transport)
+            journey.save()
         return journey
 
 

@@ -47,7 +47,29 @@
                             
                     </tbody>
 
+                
                 </table>
+                <caption >List of Pessenger</caption>  
+                <table class="table caption-top">
+                  
+                    <thead>
+                      <tr>
+                        <th scope="col"  class="text-center">No</th>
+                        <th scope="col"  class="text-center">Pessenger Name</th>
+                        <th scope="col"  class="text-center">User</th>
+                    
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in addbus_detail_1 %}
+                        <tr class="text-center">
+                          <th scope="row">{{i.id}}</th>
+                          <td>{{i.name}}</td> <br>
+                          <td>{{i.user}}</td> <br>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table>
             </div>
         </div>
     </div>

@@ -8,7 +8,7 @@
 
 
 {% block page_content %}
-    <form  novalidate id="{{ opts.model_name }}-form" action="" method="post" enctype="multipart/form-data" autocomplete="off">
+    <form   id="{{ opts.model_name }}-form" action="" method="post" enctype="multipart/form-data" autocomplete="off" novalidate>
 
         {% include "customadmin/partials/form_hidden_fields.html" %}
 

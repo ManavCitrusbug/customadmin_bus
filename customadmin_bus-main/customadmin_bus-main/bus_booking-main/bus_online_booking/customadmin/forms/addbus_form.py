@@ -35,20 +35,26 @@ class AddbusCreationForm(forms.ModelForm):
         category = cleaned_data.get("bus_category")
         date = cleaned_data.get("date_time_dpt")
        
-        if busname =='':
-            raise forms.ValidationError("Enter The Bus Name")
+        if not busname or busname.isdigit:
+            raise forms.ValidationError("Name not valid")
             
 
-        elif busnumber =='':
+        elif not busnumber :
             raise forms.ValidationError("Enter The Bus Number")
             
-        elif seats == '' :
+        elif not seats:
             raise forms.ValidationError("Enter The Bus Seats")
-        elif price == '':
+        elif seats < 0 :
+            raise forms.ValidationError("Symbbol not allow")
+        elif not price :
             raise forms.ValidationError("Enter The Bus Price")
-        elif category == '':
+        elif price < 0 :
+            raise forms.ValidationError("Symbbol not allow")
+        elif price < 100:
+            raise forms.ValidationError("Price must be 100 RS Above ")
+        elif not category :
             raise forms.ValidationError("Enter The Bus Category")
-        elif date == '':
+        elif not date :
             raise forms.ValidationError("Enter The Bus Date")
         return cleaned_data
 
@@ -94,22 +100,32 @@ class AddbusUpdateForm(forms.ModelForm):
         price = cleaned_data.get("price_per_person")
         category = cleaned_data.get("bus_category")
         date = cleaned_data.get("date_time_dpt")
-        
-        if busname =='':
-            raise forms.ValidationError("Enter The Bus Name")
-      
-
-        elif busnumber =='':
-            raise forms.ValidationError("Enter The Bus Number")
+        x=type(busnumber)
+        if not busname or busname.is_integer:
+            raise forms.ValidationError("Name not valid")
+   
             
-        elif seats == '' :
+
+        elif not busnumber :
+            raise forms.ValidationError("Enter The Bus Number")
+        elif x == 'string':
+            raise forms.ValidationError("bjsdbjbjsdf")
+            
+        elif not seats:
             raise forms.ValidationError("Enter The Bus Seats")
-        elif price == '':
+        elif seats < 0 :
+            raise forms.ValidationError("Symbbol not allow")
+        elif not price :
             raise forms.ValidationError("Enter The Bus Price")
-        elif category == '':
+        elif price < 0 :
+            raise forms.ValidationError("Symbbol not allow")
+        elif price < 100:
+            raise forms.ValidationError("Price must be 100 RS Above ")
+        elif not category :
             raise forms.ValidationError("Enter The Bus Category")
-        elif date == '':
+        elif not date :
             raise forms.ValidationError("Enter The Bus Date")
+        return cleaned_data
         
 
     def save(self, commit=True):
