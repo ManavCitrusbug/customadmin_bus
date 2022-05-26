@@ -99,14 +99,14 @@ $(document).ready(function () {
             return false;
 
         }
-        else if(date < datenow )
-        {
-            $('#date').html("<b>Date is past</b>");
-            $('#date').css("color", "red");
-            date_err = false;
-            return false;
+        // else if(date < datenow )
+        // {
+        //     $('#date').html("<b>Date is past</b>");
+        //     $('#date').css("color", "red");
+        //     date_err = false;
+        //     return false;
 
-        }
+        // }
         
         
         else {
@@ -134,6 +134,7 @@ $(document).ready(function () {
                 data: mydata,
                 success: function (data) {
                     console.log(data)
+                    console.log(data.id)
                     $('.main').append(`
                     <div class="bus1">
     <p class='root1'>${data.name} Travels</p>
@@ -152,7 +153,7 @@ $(document).ready(function () {
     <p class='time'> <b>Bus Number:</b> ${data.number_plate}</p>
     <p class="seat"><b>Bus-Category:</b> ${data.bus_category}</p>
 
-    <div class="book"><a href="{% url 'busbook' ${data.id} %}" style="color: black; text-decoration: none; ">Book</div>
+    <div class="book"><a href="/busbook/${data.id}" style="color: black; text-decoration: none; ">Book</a></div>
 
   </div>
 

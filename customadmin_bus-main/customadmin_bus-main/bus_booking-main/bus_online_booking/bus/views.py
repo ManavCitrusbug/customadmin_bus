@@ -95,8 +95,11 @@ class Deletebus(View):
 
 
 class Bookingbus(View):
+    print('******************************')
     def get(self, request, id):
-        transport = Transport.objects.filter(pk=id)
+        print('******************************---------------------------------')
+
+        transport = Transport.objects.filter(id=id)
         for transports in transport:
             t1 = transports.transport_name
 
