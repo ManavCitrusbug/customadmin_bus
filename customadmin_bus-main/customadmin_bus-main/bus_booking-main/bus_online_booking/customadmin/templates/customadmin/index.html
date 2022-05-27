@@ -28,6 +28,7 @@
           <div class="ibox-tools">
           </div>
           <h5>Users</h5>
+       
         </div>
         <div class="ibox-content">
           <h3 class="no-margins">{{ user_count }}</h3>
@@ -68,65 +69,74 @@
 
 
 
-<div class="row">
+<div class="row w-100">
   <div class="col-lg-12">
     <div class="ibox ">
-      <div class="ibox-title">
-        <h5>Orders</h5>
-        <div class="ibox-tools">
-          <div class="btn-group">
-            <button type="button" class="btn btn-xs btn-white active">Today</button>
-            <button type="button" class="btn btn-xs btn-white">Monthly</button>
-            <button type="button" class="btn btn-xs btn-white">Annual</button>
-          </div>
-        </div>
+      <div class="ibox-title text-center">
+        <h5 >Bus Chart</h5>
+     
+      
+
+
+        
       </div>
-      <div class="ibox-content">
-        <div class="row">
-          <div class="col-lg-9">
-            <div class="flot-chart">
-              <div class="flot-chart-content" id="flot-dashboard-chart"></div>
-            </div>
-          </div>
-          <div class="col-lg-3">
-            <ul class="stat-list">
-              <li>
-                <h2 class="no-margins">{{user_count}}</h2>
-                <small>Recent Users</small>
-                <div class="stat-percent">48% <i class="fa fa-arrow-up text-navy"></i></div>
-                <div class="progress progress-mini">
-                  <div style="width: 48%;" class="progress-bar"></div>
-                </div>
-              </li>
-              <li>
-                <h2 class="no-margins ">12</h2>
-                <small>Recent Marketplace Orders</small>
-                <div class="stat-percent">60% <i class="fa fa-arrow-down text-navy"></i></div>
-                <div class="progress progress-mini">
-                  <div style="width: 60%;" class="progress-bar"></div>
-                </div>
-              </li>
-              <li>
-                <h2 class="no-margins ">10</h2>
-                <small>Recent Event Orders</small>
-                <div class="stat-percent">22% <i class="fa fa-bolt text-navy"></i></div>
-                <div class="progress progress-mini">
-                  <div style="width: 22%;" class="progress-bar"></div>
-                </div>
-              </li>
-              <li>
-                <h2 class="no-margins ">9</h2>
-                <small>Flash Deals</small>
-                <div class="stat-percent">22% <i class="fa fa-bolt text-navy"></i></div>
-                <div class="progress progress-mini">
-                  <div style="width: 38%;" class="progress-bar"></div>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
+      <div class="ibox-content  ">
+        <form method='POST'>
+          {% csrf_token %}
+          <input type="month" id="month" name="month"
+          min="2018-03" value="2018-05">
+            
+              <button type="submit" value="">search</button> 
+            </form>  
+        <canvas id="myChart" width="100" height="20"></canvas>
+        <script src="{% static 'customadmin/js/plugins/chartJs/Chart.min.js' %}"></script>
+        
+        <script>
+        const ctx = document.getElementById('myChart').getContext('2d');
+        var yValues=[{%for i in list1%}"{{i}}",{%endfor%}]
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+             
+                labels: ['January','February','march','April','May','June','July','Augest','Spetember','Octomber','November','December'],
+
+                datasets: [{
+
+                    label: 'Bus Charts  ',
+                    data: yValues,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+              legend: {display: false},
+              scales: {
+                yAxes: [{ticks: {min: 2015, max:2022}}],
+              }
+            }
+        });
+        </script>
+
+        
       </div>
+    
     </div>
+ 
   </div>
 </div>
 

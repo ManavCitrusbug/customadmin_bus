@@ -22,18 +22,39 @@ from django.views.generic import TemplateView, DetailView
 from django_datatables_too.mixins import DataTableMixin
 from django.contrib.auth.models import User
 from ..forms import UserChangeForm, UserCreationForm
-from django.shortcuts import reverse, render
+from django.shortcuts import redirect, reverse, render
 
 from django.contrib.auth.models import User
-
+from datetime import datetime
 class IndexView(LoginRequiredMixin,TemplateView):
+
     template_name = "customadmin/index.html"
     context = {}
 
     def get(self, request):
         self.context['user_count']=User.objects.all().exclude(is_staff=True).count()
-        return render(request, self.template_name, self.context)
+        list1 = []
+        self.context['list1']=list1
 
+        
+        q=Transport.objects.all()
+        for query in q:
+            list1.append(query. date_time_dpt)
+
+        return render(request, self.template_name, self.context)
+    # def post(self,request):
+        # month=request.POST['month']
+        # print(month.split('-')[0])
+        # # year=request.POST['year']
+        # # transport=Transport.objects.all()
+        # # for t in transport:
+        # #     t1=t.date_time_dpt
+
+        # datetime_object = datetime.strptime(month, "%Y-%m")
+        # print(datetime_object.date(),"*******************************************")
+        # q=Transport.objects.filter(date_time_dpt__year=month.strip('-')[0])
+        # print(q)
+        # return redirect(IndexView)
 
 
 class UserListView(MyListView):

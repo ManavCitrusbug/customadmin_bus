@@ -35,7 +35,7 @@ class AddbusCreationForm(forms.ModelForm):
         category = cleaned_data.get("bus_category")
         date = cleaned_data.get("date_time_dpt")
        
-        if not busname or busname.isdigit:
+        if not busname :
             raise forms.ValidationError("Name not valid")
             
 
@@ -100,16 +100,15 @@ class AddbusUpdateForm(forms.ModelForm):
         price = cleaned_data.get("price_per_person")
         category = cleaned_data.get("bus_category")
         date = cleaned_data.get("date_time_dpt")
-        x=type(busnumber)
-        if not busname or busname.is_integer:
+        # x=type(busnumber)
+        if not busname :
             raise forms.ValidationError("Name not valid")
    
             
 
         elif not busnumber :
             raise forms.ValidationError("Enter The Bus Number")
-        elif x == 'string':
-            raise forms.ValidationError("bjsdbjbjsdf")
+
             
         elif not seats:
             raise forms.ValidationError("Enter The Bus Seats")
