@@ -1,4 +1,5 @@
 # from xmlrpc.client import Transport
+from asyncio import transports
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
@@ -34,31 +35,36 @@ class AddbusCreationForm(forms.ModelForm):
         price = cleaned_data.get("price_per_person")
         category = cleaned_data.get("bus_category")
         date = cleaned_data.get("date_time_dpt")
-       
+
+
+   
+
         if not busname :
             raise forms.ValidationError("Name not valid")
+        if not busname:
+            raise forms.ValidationError("Name not Bus Number")
+        if  Transport.objects.filter(number_plate=busnumber,date_time_dpt=date).exists() :
+            raise forms.ValidationError("This busnumber already Exist with same date")
+        
             
-
-        elif not busnumber :
-            raise forms.ValidationError("Enter The Bus Number")
-            
-        elif not seats:
+        if not seats:
             raise forms.ValidationError("Enter The Bus Seats")
-        elif seats < 0 :
+        if seats < 0 :
             raise forms.ValidationError("Symbbol not allow")
-        elif not price :
+        if not price :
             raise forms.ValidationError("Enter The Bus Price")
-        elif price < 0 :
+        if price < 0 :
             raise forms.ValidationError("Symbbol not allow")
-        elif price < 100:
+        if price < 100:
             raise forms.ValidationError("Price must be 100 RS Above ")
-        elif not category :
+        if not category :
             raise forms.ValidationError("Enter The Bus Category")
-        elif not date :
+        if not date :
             raise forms.ValidationError("Enter The Bus Date")
         return cleaned_data
 
     def save(self, commit=True):
+
         # Save the provided password in hashed format+
         cleaned_data = super(AddbusCreationForm, self).clean()
         addbus = super(AddbusCreationForm, self).save(commit=False)
@@ -103,26 +109,25 @@ class AddbusUpdateForm(forms.ModelForm):
         # x=type(busnumber)
         if not busname :
             raise forms.ValidationError("Name not valid")
-   
+        if not busname:
+            raise forms.ValidationError("Name not Bus Number")
+        if  Transport.objects.filter(number_plate=busnumber,date_time_dpt=date).exists() :
+            raise forms.ValidationError("This busnumber already Exist with same date")
+        
             
-
-        elif not busnumber :
-            raise forms.ValidationError("Enter The Bus Number")
-
-            
-        elif not seats:
+        if not seats:
             raise forms.ValidationError("Enter The Bus Seats")
-        elif seats < 0 :
+        if seats < 0 :
             raise forms.ValidationError("Symbbol not allow")
-        elif not price :
+        if not price :
             raise forms.ValidationError("Enter The Bus Price")
-        elif price < 0 :
+        if price < 0 :
             raise forms.ValidationError("Symbbol not allow")
-        elif price < 100:
+        if price < 100:
             raise forms.ValidationError("Price must be 100 RS Above ")
-        elif not category :
+        if not category :
             raise forms.ValidationError("Enter The Bus Category")
-        elif not date :
+        if not date :
             raise forms.ValidationError("Enter The Bus Date")
         return cleaned_data
         

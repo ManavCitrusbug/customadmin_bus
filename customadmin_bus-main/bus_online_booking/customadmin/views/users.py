@@ -1,3 +1,4 @@
+from asyncio import transports
 from xml.sax.saxutils import prepare_input_source
 from django.urls import reverse
 from numpy import datetime_data
@@ -34,8 +35,14 @@ class IndexView(LoginRequiredMixin,TemplateView):
 
     def get(self, request):
         self.context['user_count']=User.objects.all().exclude(is_staff=True).count()
-        
-
+        return render(request, self.template_name, self.context)
+    
+class Monthgraph(LoginRequiredMixin,TemplateView):
+    template_name = "customadmin/monthlygraph.html"
+    context = {} 
+    def get(self, request):
+        self.context['user_count']=User.objects.all().exclude(is_staff=True).count()
+        print("``````````````",self.context['user_count'])
         return render(request, self.template_name, self.context)
     def post(self,request):
         month=request.POST['month']
@@ -49,16 +56,51 @@ class IndexView(LoginRequiredMixin,TemplateView):
             if data is m:
                 list.append(i)
         total_list=len(list)
-        print("@@@@@@@@@@@@@",q)
+
+        return render(request,'customadmin/monthlygraph.html',{'year':year,'listtotal':total_list,'month':month})
+class Dategraph(LoginRequiredMixin,TemplateView):
+    template_name = "customadmin/date_to_date_graph.html"
+    context = {} 
+    def get(self, request):
+        self.context['user_count']=User.objects.all().exclude(is_staff=True).count()
+
+        return render(request, self.template_name, self.context)
+    def post(self,request):
+        date=request.POST['date']
+
+        month=request.POST['month']
+
+        year=request.POST['year']
+        print(type(date),type(year),type(month),"###############")
    
-  
-        
+        list=[]
+        full_date = year + "-" + month + "-" + date
+        q=Transport.objects.filter(date_time_dpt__range=[full_date, full_date])
+        for i in q:
+            list.append(i)
+        total_list=len(list)
+
+        return render(request,'customadmin/date_to_date_graph.html',{'year':year,'date':date,'listtotal':total_list,'month':month})
+
+class Yeargraph(LoginRequiredMixin,TemplateView):
+    template_name = "customadmin/year_graph.html"
+    context = {} 
+    def get(self, request):
+        self.context['user_count']=User.objects.all().exclude(is_staff=True).count()
+
+        return render(request, self.template_name, self.context)
+    def post(self,request):
+        year=request.POST['year']
+        y=int(year)
+        transport=Transport.objects.filter(date_time_dpt__year=year)
+        list=[]
+        for i in transport:
+            list.append(i)
+        total_list=len(list)
+        return render(request,'customadmin/year_graph.html',{'year':y,'listtotal':total_list})
 
 
-            
 
-      
-        return render(request,'customadmin/index.html',{'year':year,'listtotal':total_list,'month':month})
         
 
 

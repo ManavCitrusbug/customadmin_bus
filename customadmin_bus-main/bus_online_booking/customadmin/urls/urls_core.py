@@ -6,8 +6,12 @@ app_name='customadmin'
 
 urlpatterns = [
     path("", views.IndexView.as_view(), name="dashboard"),
+    path("month/graph/", views.Monthgraph.as_view(), name="month-graph"),
+    path("date/graph/", views.Dategraph.as_view(), name="date-graph"),
+    path("year/graph/", views.Yeargraph.as_view(), name="year-graph"),
         # User
     path("users/", views.UserListView.as_view(), name="user-detail"),
+    
    
     path("users/<int:pk>/detail/", views.UserDetailView.as_view(), name="user-detailview"),
 
